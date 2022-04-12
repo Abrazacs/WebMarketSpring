@@ -35,6 +35,27 @@ angular.module('market', []).controller('indexController', function ($scope, $ht
             });
     }
 
+    $scope.increment = function (id){
+        $http.get('http://localhost:8180/market/api/v1/cart/increment/'+id)
+            .then(function (response){
+                $scope.fillCart();
+            });
+    }
+
+    $scope.decrement = function (id){
+        $http.get('http://localhost:8180/market/api/v1/cart/decrement/'+id)
+            .then(function (response){
+                $scope.fillCart();
+            });
+    }
+
+    $scope.clearCart = function (){
+        $http.get('http://localhost:8180/market/api/v1/cart/clear')
+            .then(function (response){
+                $scope.fillCart();
+            });
+    }
+
     $scope.fillTable();
     $scope.fillCart();
 })

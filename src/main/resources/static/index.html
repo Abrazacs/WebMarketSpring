@@ -55,30 +55,42 @@
             <input type="number" class="form-control" id="newProductPrice" ng-model="newProduct.price" placeholder="Цена">
         </div>
         <div class="col-auto">
+            <input type="text" class="form-control" id="newProductCategory" ng-model="newProduct.category" placeholder="Категория">
+        </div>
+        <div class="col-auto">
             <button type="submit" class="btn btn-primary mb-3">Создать</button>
         </div>
     </form>
     <p></p>
     <hr>
     <p></p>
-    <h3>Корзина</h3>
+    <div>
+        <h3>Корзина <button class="btn btn-danger" ng-click="clearCart()">Очистить корзину</button> </h3>
+    </div>
+
     <table class="table table-hover">
         <thead>
         <tr>
             <td>ID</td>
             <td>Название</td>
             <td>Цена</td>
+            <td>Количество</td>
+            <td></td>
+            <td>Стоимость</td>
         </tr>
         </thead>
         <tbody>
         <tr ng-repeat="p in productsInCart">
-            <td>{{p.id}}</td>
-            <td>{{p.title}}</td>
+            <td>{{p.productId}}</td>
+            <td>{{p.productTitle}}</td>
+            <td>{{p.pricePerProduct}}</td>
+            <td>{{p.quantity}}
+            <td><button type="button" class="btn btn-success" ng-click="increment(p.productId)">+</button> <button type="button" class="btn btn-warning" ng-click="decrement(p.productId)">-</button></td>>
             <td>{{p.price}}</td>
+
         </tr>
         </tbody>
     </table>
-
 </div>
 
 </body>

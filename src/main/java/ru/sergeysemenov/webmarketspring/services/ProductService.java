@@ -2,7 +2,6 @@ package ru.sergeysemenov.webmarketspring.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import ru.sergeysemenov.webmarketspring.converters.ProductConverter;
 import ru.sergeysemenov.webmarketspring.dtos.CreateNewProductDto;
 import ru.sergeysemenov.webmarketspring.dtos.ProductDto;
@@ -11,12 +10,14 @@ import ru.sergeysemenov.webmarketspring.repositories.ProductRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class ProductService {
     private final ProductRepository productRepository;
     private final ProductConverter productConverter;
+    private final CategoryService categoryService;
 
     public List<ProductDto> findAllProducts(){
         List<Product> products = productRepository.findAll();
@@ -35,10 +36,13 @@ public class ProductService {
         Product product = new Product();
         product.setTitle(createNewProductDto.getTitle());
         product.setPrice(createNewProductDto.getPrice());
+        product.setCategory(categoryService.findCategoryByCategoryTitle(createNewProductDto.getCategory()));
         productRepository.save(product);
     }
 
     public Product findProductById(Long id){
         return productRepository.findProductById(id);
     }
+
+    public Optional<Product> findById(Long productId) { return productRepository.findById(productId); }
 }

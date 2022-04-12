@@ -5,9 +5,7 @@ import org.springframework.stereotype.Repository;
 import ru.sergeysemenov.webmarketspring.entities.Category;
 
 
-import java.util.Optional;
-
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Long> {
-    Optional<Category> findByTitle(String title);
+    Category findCategoryByTitle(String title);
 }
