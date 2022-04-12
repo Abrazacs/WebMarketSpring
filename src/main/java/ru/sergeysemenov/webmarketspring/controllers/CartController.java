@@ -28,8 +28,7 @@ public class CartController {
 
     @GetMapping("/add-to-cart/{id}")
     public void addProductIntoCart(@PathVariable Long id){
-        Cart cart = cartService.getCurrentCart();
-        cart.add(productService.findProductById(id));
+       cartService.addToCart(id);
     }
 
     @GetMapping("/increment/{id}")
