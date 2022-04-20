@@ -1,0 +1,12 @@
+package ru.sergeysemenov.webmarketspring.core.repositories;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import ru.sergeysemenov.webmarketspring.core.entities.User;
+
+import java.util.Optional;
+
+@Repository
+public interface UserRepository extends JpaRepository<User, Long> {
+    Optional<User> findByUsername(String username);
+}
