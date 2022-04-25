@@ -2,18 +2,26 @@ package ru.sergeysemenov.webmarketspring.cart.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.sergeysemenov.webmarketspring.api.CartDto;
+import ru.sergeysemenov.webmarketspring.api.CartItemDto;
 import ru.sergeysemenov.webmarketspring.api.ProductDto;
+import ru.sergeysemenov.webmarketspring.cart.convertors.CartConverter;
+import ru.sergeysemenov.webmarketspring.cart.convertors.CartItemConverter;
 import ru.sergeysemenov.webmarketspring.cart.integrations.ProductServiceIntegration;
 import ru.sergeysemenov.webmarketspring.cart.utils.Cart;
 import ru.sergeysemenov.webmarketspring.cart.utils.CartItem;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class CartService {
     private final ProductServiceIntegration productServiceIntegration;
+    private final CartConverter cartConverter;
+    private final CartItemConverter cartItemConverter;
     private Cart cart;
 
     @PostConstruct
@@ -58,5 +66,12 @@ public class CartService {
         }
     }
 
+    public CartDto getCartDto(){
+        return cartConverter.entityToDto(cart);
+    }
+
+    public List<CartItemDto> getListOfCartItemsDto(){
+        return cart.getItems().stream().map(cartItemConverter::entityToDto).collect(Collectors.toList());
+    }
 
 }

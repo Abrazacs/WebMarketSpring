@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.sergeysemenov.webmarketspring.api.*;
+import ru.sergeysemenov.webmarketspring.core.integrations.CartServiceIntegration;
 import ru.sergeysemenov.webmarketspring.core.services.ProductService;
 
 
@@ -12,7 +13,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/products")
 @RequiredArgsConstructor
-@CrossOrigin("*")
 public class ProductController {
     private final ProductService productService;
 
@@ -35,6 +35,11 @@ public class ProductController {
     @DeleteMapping("/{id}")
     public void deleteProductById(@PathVariable Long id) {
         productService.deleteById(id);
+    }
+
+    @GetMapping("/create_order")
+    public void createOrder(){
+
     }
 
 

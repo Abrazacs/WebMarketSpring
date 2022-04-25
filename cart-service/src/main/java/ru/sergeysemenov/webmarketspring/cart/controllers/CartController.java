@@ -1,30 +1,24 @@
 package ru.sergeysemenov.webmarketspring.cart.controllers;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+import ru.sergeysemenov.webmarketspring.api.CartDto;
 import ru.sergeysemenov.webmarketspring.api.CartItemDto;
-import ru.sergeysemenov.webmarketspring.cart.convertors.CartItemConverter;
 import ru.sergeysemenov.webmarketspring.cart.services.CartService;
-import ru.sergeysemenov.webmarketspring.cart.utils.Cart;
-import ru.sergeysemenov.webmarketspring.cart.utils.CartItem;
-
 
 import java.util.List;
-import java.util.stream.Collectors;
-
 
 @RestController
 @RequestMapping("/api/v1/cart")
 @RequiredArgsConstructor
+@Slf4j
 public class CartController {
     private final CartService cartService;
-    private final CartItemConverter cartItemConverter;
-
 
     @GetMapping()
     public List<CartItemDto> getProductsInCart(){
-        Cart cart = cartService.getCurrentCart();
-        return cart.getItems().stream().map(cartItemConverter::entityToDto).collect(Collectors.toList());
+        return cartService.getListOfCartItemsDto();
     }
 
     @GetMapping("/add-to-cart/{id}")
@@ -44,8 +38,13 @@ public class CartController {
 
     @GetMapping("/clear")
     public void clearCart(){
-        System.out.println("clear");
         cartService.clearCart();
+        log.info("Cart cleared");
+    }
+
+    @GetMapping("/get_cart")
+    public CartDto getCart(){
+        return cartService.getCartDto();
     }
 
 }
