@@ -43,10 +43,14 @@ public class Order{
 
     @Override
     public String toString() {
-        return "Order{" +
-                "id=" + id +
-                ", totalPrice=" + totalPrice +
-                ", createdAt=" + createdAt +
-                '}';
+       StringBuilder sb = new StringBuilder();
+       sb.append("User:" + user.getUsername() + " ");
+       sb.append("ordered: ");
+       for (OrderItem item:orderItemsList) {
+           sb.append("prod_id: " + item.getProductId() + " qty " + item.getQuantity() + " price" + item.getPrice() + "; ");
+       }
+       sb.append("total price: "+ totalPrice);
+       return sb.toString();
     }
+
 }

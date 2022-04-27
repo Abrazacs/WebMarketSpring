@@ -108,6 +108,13 @@ angular.module('market', ['ngStorage']).controller('indexController', function (
             });
     }
 
+    $scope.createOrder = function (){
+        $http.post('http://localhost:5555/order/api/v1/orders')
+            .then(function (response) {
+                $scope.fillCart();
+            });
+    }
+
     $scope.fillTable();
     $scope.fillCart();
 })

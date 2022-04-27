@@ -3,6 +3,7 @@ package ru.sergeysemenov.webmarketspring.core.services;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.sergeysemenov.webmarketspring.api.CartDto;
 import ru.sergeysemenov.webmarketspring.api.CartItemDto;
 import ru.sergeysemenov.webmarketspring.core.entities.Order;
@@ -11,7 +12,6 @@ import ru.sergeysemenov.webmarketspring.core.integrations.CartServiceIntegration
 import ru.sergeysemenov.webmarketspring.core.repositories.OrderRepository;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -23,6 +23,7 @@ public class OrderService {
     private final CartServiceIntegration cartServiceIntegration;
     private final UserService userService;
 
+    @Transactional
     public void createOrder(String username) {
         CartDto cartDto = cartServiceIntegration.getCart();
         if(cartDto.getTotalPrice().equals(BigDecimal.ZERO)){
@@ -40,7 +41,6 @@ public class OrderService {
         order.setOrderItemsList(orderItems);
         order.setTotalPrice(cartDto.getTotalPrice());
         order.setUser(userService.findByUsername(username).get());
-        order.setCreatedAt(LocalDateTime.now());
         return order;
     }
 
