@@ -16,7 +16,7 @@ import java.util.List;
 public class CartController {
     private final CartService cartService;
 
-    @GetMapping()
+    @GetMapping("/items")
     public List<CartItemDto> getProductsInCart(){
         return cartService.getListOfCartItemsDto();
     }
@@ -42,7 +42,7 @@ public class CartController {
         log.info("Cart cleared");
     }
 
-    @GetMapping("/get_cart")
+    @GetMapping()
     public CartDto getCart(){
         return cartService.getCartDto();
     }

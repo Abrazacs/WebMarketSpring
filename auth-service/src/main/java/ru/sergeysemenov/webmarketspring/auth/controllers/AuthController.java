@@ -17,7 +17,7 @@ import ru.sergeysemenov.webmarketspring.auth.exceptions.AppError;
 import ru.sergeysemenov.webmarketspring.auth.services.UserService;
 import ru.sergeysemenov.webmarketspring.auth.utils.JwtTokenUtil;
 
-import java.security.Principal;
+
 
 @RestController
 @RequiredArgsConstructor
@@ -27,7 +27,7 @@ public class AuthController {
     private final JwtTokenUtil jwtTokenUtil;
     private final AuthenticationManager authenticationManager;
 
-    @PostMapping
+    @PostMapping("/authenticate")
     public ResponseEntity<?> createAuthToken(@RequestBody JwtRequest authRequest) {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));

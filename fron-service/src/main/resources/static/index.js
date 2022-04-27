@@ -52,28 +52,28 @@ angular.module('market', ['ngStorage']).controller('indexController', function (
 
 
     $scope.fillTable = function () {
-        $http.get('http://localhost:5555/market/api/v1/products')
+        $http.get('http://localhost:5555/core/api/v1/products')
             .then(function (response) {
                 $scope.products = response.data;
             });
     }
 
     $scope.fillCart = function (){
-        $http.get('http://localhost:5555/market-cart/api/v1/cart')
+        $http.get('http://localhost:5555/cart/api/v1/cart/items')
             .then(function (response){
                 $scope.productsInCart = response.data;
             });
     }
 
     $scope.deleteProduct = function (id) {
-        $http.delete('http://localhost:5555/market/api/v1/products/' + id)
+        $http.delete('http://localhost:5555/core/api/v1/products/' + id)
             .then(function (response) {
                 $scope.fillTable();
             });
     }
 
     $scope.createNewProduct = function () {
-        $http.post('http://localhost:5555/market/api/v1/products', $scope.newProduct)
+        $http.post('http://localhost:5555/core/api/v1/products', $scope.newProduct)
             .then(function (response) {
                 $scope.newProduct = null;
                 $scope.fillTable();
@@ -81,28 +81,28 @@ angular.module('market', ['ngStorage']).controller('indexController', function (
     }
 
     $scope.addProduct = function (id){
-        $http.get('http://localhost:5555/market-cart/api/v1/cart/add-to-cart/'+id)
+        $http.get('http://localhost:5555/cart/api/v1/cart/add-to-cart/'+id)
             .then(function (response){
                 $scope.fillCart();
             });
     }
 
     $scope.increment = function (id){
-        $http.get('http://localhost:5555/market-cart/api/v1/cart/increment/'+id)
+        $http.get('http://localhost:5555/cart/api/v1/cart/increment/'+id)
             .then(function (response){
                 $scope.fillCart();
             });
     }
 
     $scope.decrement = function (id){
-        $http.get('http://localhost:5555/market-cart/api/v1/cart/decrement/'+id)
+        $http.get('http://localhost:5555/cart/api/v1/cart/decrement/'+id)
             .then(function (response){
                 $scope.fillCart();
             });
     }
 
     $scope.clearCart = function (){
-        $http.get('http://localhost:5555/market-cart/api/v1/cart/clear')
+        $http.get('http://localhost:5555/cart/api/v1/cart/clear')
             .then(function (response){
                 $scope.fillCart();
             });

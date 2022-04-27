@@ -14,7 +14,7 @@ public class CartServiceIntegration {
 
     public CartDto getCart(){
         return cartServiceWebClient.get()
-                .uri("/api/v1/cart/get_cart")
+                .uri("/api/v1/cart")
                 .retrieve()
                 .bodyToMono(CartDto.class)
                 .block();

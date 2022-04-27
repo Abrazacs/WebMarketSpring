@@ -37,10 +37,5 @@ public class ProductController {
         productService.deleteById(id);
     }
 
-    @GetMapping("/create_order")
-    public void createOrder(){
-
-    }
-
-
 }
+
