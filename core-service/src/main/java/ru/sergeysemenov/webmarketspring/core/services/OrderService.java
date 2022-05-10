@@ -21,7 +21,6 @@ import java.util.List;
 public class OrderService {
     private final OrderRepository orderRepository;
     private final CartServiceIntegration cartServiceIntegration;
-    private final UserService userService;
 
     @Transactional
     public void createOrder(String username) {
@@ -35,17 +34,18 @@ public class OrderService {
         cartServiceIntegration.clearCart();
     }
 
-    public Order convertCartToOrder(CartDto cartDto, String username) {
+    private Order convertCartToOrder(CartDto cartDto, String username) {
         Order order = new Order();
-        List<OrderItem> orderItems = cartDto.getItems().stream().map(this::convertCartItemToOrderItem).toList();
+        List<OrderItem> orderItems = cartDto.getItems().stream().map((CartItemDto itemDto) -> convertCartItemToOrderItem(itemDto, order)).toList();
         order.setOrderItemsList(orderItems);
         order.setTotalPrice(cartDto.getTotalPrice());
-        order.setUser(userService.findByUsername(username).get());
+        order.setUsername(username);
         return order;
     }
 
-    public OrderItem convertCartItemToOrderItem(CartItemDto itemDto) {
+    private OrderItem convertCartItemToOrderItem(CartItemDto itemDto, Order order) {
         OrderItem orderItem = new OrderItem();
+        orderItem.setOrder(order);
         orderItem.setProductId(itemDto.getProductId());
         orderItem.setPricePerProduct(itemDto.getPricePerProduct());
         orderItem.setQuantity(itemDto.getQuantity());

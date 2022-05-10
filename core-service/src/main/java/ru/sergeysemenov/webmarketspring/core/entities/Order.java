@@ -23,9 +23,8 @@ public class Order{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @Column(name = "username")
+    private String username;
 
     @Column(name = "total_price")
     private BigDecimal totalPrice;
@@ -44,7 +43,7 @@ public class Order{
     @Override
     public String toString() {
        StringBuilder sb = new StringBuilder();
-       sb.append("User:" + user.getUsername() + " ");
+       sb.append("User:" + username + " ");
        sb.append("ordered: ");
        for (OrderItem item:orderItemsList) {
            sb.append("prod_id: " + item.getProductId() + " qty " + item.getQuantity() + " price" + item.getPrice() + "; ");

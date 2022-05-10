@@ -33,11 +33,11 @@ public class ProductService {
         productRepository.deleteById(id);
     }
 
-    public void createNewProduct(CreateNewProductDto createNewProductDto) {
+    public void createNewProduct(ProductDto productDto) {
         Product product = new Product();
-        product.setTitle(createNewProductDto.getTitle());
-        product.setPrice(createNewProductDto.getPrice());
-        product.setCategory(categoryService.findCategoryByCategoryTitle(createNewProductDto.getCategory()));
+        product.setTitle(productDto.getTitle());
+        product.setPrice(productDto.getPrice());
+        product.setCategory(categoryService.findCategoryByCategoryTitle(productDto.getCategoryTitle()));
         productRepository.save(product);
     }
 
