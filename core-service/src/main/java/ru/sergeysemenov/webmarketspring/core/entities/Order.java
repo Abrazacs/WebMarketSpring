@@ -46,7 +46,7 @@ public class Order{
        sb.append("User:" + username + " ");
        sb.append("ordered: ");
        for (OrderItem item:orderItemsList) {
-           sb.append("prod_id: " + item.getProductId() + " qty " + item.getQuantity() + " price" + item.getPrice() + "; ");
+           sb.append("prod_id: " + item.getProduct().getId() + " qty " + item.getQuantity() + " price" + item.getPrice() + "; ");
        }
        sb.append("total price: "+ totalPrice);
        return sb.toString();

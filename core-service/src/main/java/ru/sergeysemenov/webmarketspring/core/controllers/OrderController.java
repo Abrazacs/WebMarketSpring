@@ -3,7 +3,10 @@ package ru.sergeysemenov.webmarketspring.core.controllers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import ru.sergeysemenov.webmarketspring.core.entities.Order;
 import ru.sergeysemenov.webmarketspring.core.services.OrderService;
+
+import java.util.List;
 
 
 @RestController
@@ -11,6 +14,11 @@ import ru.sergeysemenov.webmarketspring.core.services.OrderService;
 @RequiredArgsConstructor
 public class OrderController {
     private final OrderService orderService;
+
+    @GetMapping
+    public List<Order> getUsersOrders (@RequestHeader String username){
+        return orderService.findUserOrders(username);
+    }
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)

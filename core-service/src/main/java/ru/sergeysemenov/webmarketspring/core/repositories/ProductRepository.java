@@ -7,8 +7,6 @@ import ru.sergeysemenov.webmarketspring.core.entities.Product;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
-
-
     Product findProductById(Long id);
 
 }

@@ -1,0 +1,39 @@
+<div>
+    <p></p>
+    <h3>Регистрация</h3>
+
+    <p></p>
+
+    <form ng-submit="signIn()">
+        <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">Email</label>
+            <div class="col-sm-10">
+                <input type="email" class="form-control" ng-model="newUser.email">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">Логин</label>
+            <div class="col-sm-10">
+                <input type="login" class="form-control" ng-model="newUser.username">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">Пароль</label>
+            <div class="col-sm-10">
+                <input type="password" class="form-control" ng-model="newUser.password">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">Повторите пароль</label>
+            <div class="col-sm-10">
+                <input type="password" class="form-control" ng-model="newUser.confirmPassword">
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Подтвердить</button>
+    </form>
+
+    <div ng-show="!isStatusNull">
+        <span value="status.value"></span>
+    </div>
+
+</div>

@@ -7,6 +7,7 @@ import ru.sergeysemenov.webmarketspring.api.ProductDto;
 
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -14,6 +15,11 @@ import java.util.List;
 public class Cart {
     private List<CartItem> items;
     private BigDecimal totalPrice;
+
+    public Cart() {
+        this.items = new ArrayList<>();
+        this.totalPrice = BigDecimal.ZERO;
+    }
 
     public void add(ProductDto p) {
         if(!items.isEmpty()) {

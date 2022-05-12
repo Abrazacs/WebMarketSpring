@@ -5,9 +5,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import ru.sergeysemenov.webmarketspring.api.CartDto;
 import ru.sergeysemenov.webmarketspring.api.CartItemDto;
+import ru.sergeysemenov.webmarketspring.api.StringResponse;
 import ru.sergeysemenov.webmarketspring.cart.services.CartService;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/cart")
@@ -16,35 +18,54 @@ import java.util.List;
 public class CartController {
     private final CartService cartService;
 
-    @GetMapping("/items")
-    public List<CartItemDto> getProductsInCart(){
-        return cartService.getListOfCartItemsDto();
+    @GetMapping("/generate_id")
+    public StringResponse generateGuestCartId() {
+        return new StringResponse(UUID.randomUUID().toString());
     }
 
-    @GetMapping("/add-to-cart/{id}")
-    public void addProductIntoCart(@PathVariable Long id){
-       cartService.addToCart(id);
+    @GetMapping("/{guestCartId}")
+    public CartDto getCurrentCart(@RequestHeader(required = false) String username, @PathVariable String guestCartId) {
+        String currentCartId = selectCartId(username, guestCartId);
+        return cartService.getCartDto(currentCartId);
     }
 
-    @GetMapping("/increment/{id}")
-    public void incrementItemQty(@PathVariable Long id){
-        cartService.incrementItemQty(id);
+    @GetMapping("/{guestCartId}/add/{productId}")
+    public void addProductToCart(@RequestHeader(required = false) String username, @PathVariable String guestCartId, @PathVariable Long productId) {
+        String currentCartId = selectCartId(username, guestCartId);
+        cartService.addToCart(currentCartId, productId);
     }
 
-    @GetMapping("/decrement/{id}")
-    public void decrementItemQty(@PathVariable Long id){
-        cartService.decrementItemQty(id);
+    @GetMapping("/{guestCartId}/clear")
+    public void clearCurrentCart(@RequestHeader(required = false) String username, @PathVariable String guestCartId) {
+        String currentCartId = selectCartId(username, guestCartId);
+        cartService.clearCart(currentCartId);
     }
 
-    @GetMapping("/clear")
-    public void clearCart(){
-        cartService.clearCart();
-        log.info("Cart cleared");
+    @GetMapping("/{guestCartId}/items")
+    public List<CartItemDto> getProductsInCart(@RequestHeader(required = false) String username, @PathVariable String guestCartId){
+        String currentCartId = selectCartId(username, guestCartId);
+        return cartService.getListOfCartItemsDto(currentCartId);
     }
 
-    @GetMapping()
-    public CartDto getCart(){
-        return cartService.getCartDto();
+
+    @GetMapping("/{guestCartId}/increment/{id}")
+    public void incrementItemQty(@RequestHeader(required = false) String username, @PathVariable String guestCartId, @PathVariable Long id){
+        String currentCartId = selectCartId(username, guestCartId);
+        cartService.incrementItemQty(id, currentCartId);
+    }
+
+    @GetMapping("/{guestCartId}/decrement/{id}")
+    public void decrementItemQty(@RequestHeader(required = false) String username, @PathVariable String guestCartId, @PathVariable Long id){
+        String currentCartId = selectCartId(username, guestCartId);
+        cartService.decrementItemQty(id, currentCartId);
+    }
+
+
+    private String selectCartId(String username, String guestCartId) {
+        if (username != null) {
+            return username;
+        }
+        return guestCartId;
     }
 
 }

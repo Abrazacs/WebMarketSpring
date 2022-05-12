@@ -26,8 +26,9 @@ public class OrderItem {
     @JoinColumn(name = "order_id")
     private Order order;
 
-    @Column(name = "product_id")
-    private Long productId;
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
 
     @Column(name = "price_per_product")
     private BigDecimal pricePerProduct;
