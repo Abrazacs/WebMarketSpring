@@ -3,7 +3,7 @@ package ru.sergeysemenov.webmarketspring.api;
 public class RegisterUserDto {
     private String username;
     private String password;
-    private String confirmPassword;
+    private String confirmation;
     private String email;
 
     public String getUsername() {
@@ -22,12 +22,12 @@ public class RegisterUserDto {
         this.password = password;
     }
 
-    public String getConfirmPassword() {
-        return confirmPassword;
+    public String getConfirmation() {
+        return confirmation;
     }
 
-    public void setConfirmPassword(String confirmPassword) {
-        this.confirmPassword = confirmPassword;
+    public void setConfirmation(String confirmation) {
+        this.confirmation = confirmation;
     }
 
     public String getEmail() {

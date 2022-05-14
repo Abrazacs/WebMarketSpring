@@ -1,6 +1,7 @@
 package ru.sergeysemenov.webmarketspring.auth.services;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -44,19 +45,14 @@ public class UserService implements UserDetailsService {
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
     }
 
-    public StringResponse tryToSignInNewUser(RegisterUserDto registerUserDto) {
-        StringResponse stringResponse = new StringResponse();
-        if(registerUserDto.getPassword() == registerUserDto.getConfirmPassword()){
-            if(findByUsername(registerUserDto.getUsername()).isPresent()){
-                stringResponse.setValue("Пользователь с таким имене уже существует. Попробуйте сного");
-            }else{
-                userRepository.save(createNewUser(registerUserDto));
-                stringResponse.setValue("Регистрация завершена");
-            }
-        }else{
-            stringResponse.setValue("Пароли должны совпадать");
+    public HttpStatus tryToSignInNewUser(RegisterUserDto registerUserDto) {
+        if (userRepository.findByUsername(registerUserDto.getUsername()).isPresent()){
+            return HttpStatus.BAD_REQUEST;
+        } else {
+            User user = createNewUser(registerUserDto);
+            userRepository.save(user);
+            return HttpStatus.OK;
         }
-        return stringResponse;
     }
 
     private User createNewUser(RegisterUserDto registerUserDto) {

@@ -14,6 +14,10 @@
                 templateUrl: 'store/store.html',
                 controller: 'storeController'
             })
+            .when('/reg', {
+                templateUrl: 'registration/register.html',
+                controller: 'registerController'
+            })
             .when('/cart', {
                 templateUrl: 'cart/cart.html',
                 controller: 'cartController'
@@ -21,10 +25,6 @@
             .when('/orders', {
                 templateUrl: 'orders/orders.html',
                 controller: 'ordersController'
-            })
-            .when('/registration', {
-                templateUrl: 'registration/registration.html',
-                controller: 'regController'
             })
             .otherwise({
                 redirectTo: '/'

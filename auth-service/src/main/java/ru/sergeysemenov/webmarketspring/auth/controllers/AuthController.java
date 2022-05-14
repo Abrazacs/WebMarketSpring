@@ -39,7 +39,7 @@ public class AuthController {
     }
 
     @PostMapping("/registration")
-    public StringResponse signInNewUser(@RequestBody RegisterUserDto registerUserDto){
+    public HttpStatus signInNewUser(@RequestBody RegisterUserDto registerUserDto){
         return userService.tryToSignInNewUser(registerUserDto);
     }
 
