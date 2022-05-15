@@ -7,7 +7,11 @@ angular.module('market').controller('cartController', function ($scope, $http, $
     };
 
     $scope.createOrder = function () {
-        $http.post('http://localhost:5555/core/api/v1/orders')
+        if($scope.address.value = ''){
+            alert("Введите адрес доставки")
+            return;
+        }
+        $http.post('http://localhost:5555/core/api/v1/orders', $scope.address)
             .then(function (response) {
                 $scope.loadCart();
             });

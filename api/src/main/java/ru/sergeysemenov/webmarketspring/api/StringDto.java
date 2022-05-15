@@ -1,6 +1,6 @@
 package ru.sergeysemenov.webmarketspring.api;
 
-public class StringResponse {
+public class StringDto {
 
     private String value;
 
@@ -12,10 +12,10 @@ public class StringResponse {
         this.value = value;
     }
 
-    public StringResponse() {
+    public StringDto() {
     }
 
-    public StringResponse(String value) {
+    public StringDto(String value) {
         this.value = value;
     }
 }

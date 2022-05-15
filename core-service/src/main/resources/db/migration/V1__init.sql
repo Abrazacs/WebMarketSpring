@@ -29,6 +29,7 @@ create table orders (
     id              bigserial primary key,
     username        varchar(255),
     total_price     numeric(8, 2),
+    address         varchar(255),
     created_at      timestamp default current_timestamp,
     updated_at      timestamp default current_timestamp
 );

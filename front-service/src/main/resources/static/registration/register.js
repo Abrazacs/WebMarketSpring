@@ -13,11 +13,12 @@ angular.module('market').controller('registerController', function ($scope, $htt
         else{
             $http.post('http://localhost:5555/auth/registration', $scope.entrant)
                 .then(function (response) {
-                    if (response.status == 200){
+                    if (response.ok){
                         alert('Вы успешно зарегистрировались. Войдите под учетной записью')
                     }
                     else {
-                        alert('Польователь с таким логином или почтой уже существует')
+                        response.data = $scope.error;
+                        alert($scope.error.message)
                     }
                 });
         }

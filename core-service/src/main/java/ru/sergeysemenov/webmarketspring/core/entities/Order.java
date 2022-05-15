@@ -40,6 +40,9 @@ public class Order{
     @OneToMany(mappedBy = "id")
     private List<OrderItem> orderItemsList;
 
+    @Column(name = "address")
+    private String address;
+
     @Override
     public String toString() {
        StringBuilder sb = new StringBuilder();

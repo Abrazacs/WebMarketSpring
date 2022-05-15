@@ -1,6 +1,7 @@
 package ru.sergeysemenov.webmarketspring.auth.services;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -11,7 +12,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.sergeysemenov.webmarketspring.api.RegisterUserDto;
-import ru.sergeysemenov.webmarketspring.api.StringResponse;
 import ru.sergeysemenov.webmarketspring.auth.entities.Role;
 import ru.sergeysemenov.webmarketspring.auth.entities.User;
 import ru.sergeysemenov.webmarketspring.auth.repositories.UserRepository;
@@ -24,6 +24,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final RoleService roleService;
@@ -45,16 +46,15 @@ public class UserService implements UserDetailsService {
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
     }
 
-    public HttpStatus tryToSignInNewUser(RegisterUserDto registerUserDto) {
+    public void tryToSignInNewUser(RegisterUserDto registerUserDto) throws Exception {
         if (userRepository.findByUsername(registerUserDto.getUsername()).isPresent()){
-            return HttpStatus.BAD_REQUEST;
+            throw new Exception("Логин занят");
         } else if(userRepository.findByEmail(registerUserDto.getEmail()).isPresent()){
-            return HttpStatus.BAD_REQUEST;
+            throw new Exception("Почта занята");
         }
         else {
             User user = createNewUser(registerUserDto);
             userRepository.save(user);
-            return HttpStatus.OK;
         }
     }
 

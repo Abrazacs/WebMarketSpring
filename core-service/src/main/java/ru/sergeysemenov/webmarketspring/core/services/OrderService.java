@@ -25,12 +25,13 @@ public class OrderService {
     private final ProductService productService;
 
     @Transactional
-    public void createOrder(String username) {
+    public void createOrder(String username, String address) {
         CartDto cartDto = cartServiceIntegration.getCart(username);
         if(cartDto.getTotalPrice().equals(BigDecimal.ZERO)){
             throw new IllegalStateException("Нельзя оформить заказ для пустой корзины");
         }
         Order order = convertCartToOrder(cartDto, username);
+
         log.info(order.toString());
         orderRepository.save(order);
         cartServiceIntegration.clearCart(username);

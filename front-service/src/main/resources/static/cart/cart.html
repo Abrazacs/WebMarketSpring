@@ -25,6 +25,12 @@
             </tbody>
         </table>
         <p></p>
+        <form>
+            <div class="mb-3">
+                <label class="form-label">Адрес доставки</label>
+                <input ng-model="address.value" type="text" class="form-control">
+            </div>
+        </form>
         <button class="btn btn-secondary" ng-click="guestCreateOrder()" ng-show="!isUserLoggedIn()">Оформить заказ</button>
         <button class="btn btn-primary" ng-click="createOrder()" ng-show="isUserLoggedIn()">Оформить заказ</button>
     </div>

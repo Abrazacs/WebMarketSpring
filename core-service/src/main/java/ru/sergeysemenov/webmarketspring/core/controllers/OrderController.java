@@ -3,6 +3,7 @@ package ru.sergeysemenov.webmarketspring.core.controllers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import ru.sergeysemenov.webmarketspring.api.StringDto;
 import ru.sergeysemenov.webmarketspring.core.entities.Order;
 import ru.sergeysemenov.webmarketspring.core.services.OrderService;
 
@@ -22,8 +23,8 @@ public class OrderController {
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public void createOrder(@RequestHeader String username){
-        orderService.createOrder(username);
+    public void createOrder(@RequestHeader String username, @RequestBody StringDto response){
+        orderService.createOrder(username, response.getValue());
     }
 
 }

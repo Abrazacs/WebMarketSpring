@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import ru.sergeysemenov.webmarketspring.api.JwtRequest;
 import ru.sergeysemenov.webmarketspring.api.JwtResponse;
 import ru.sergeysemenov.webmarketspring.api.RegisterUserDto;
-import ru.sergeysemenov.webmarketspring.api.StringResponse;
 import ru.sergeysemenov.webmarketspring.auth.exceptions.AppError;
 import ru.sergeysemenov.webmarketspring.auth.services.UserService;
 import ru.sergeysemenov.webmarketspring.auth.utils.JwtTokenUtil;
@@ -41,8 +40,13 @@ public class AuthController {
     }
 
     @PostMapping("/registration")
-    public HttpStatus signInNewUser(@RequestBody RegisterUserDto registerUserDto){
-        return userService.tryToSignInNewUser(registerUserDto);
+    public ResponseEntity<?> signInNewUser(@RequestBody RegisterUserDto registerUserDto){
+       try {
+           userService.tryToSignInNewUser(registerUserDto);
+       } catch (Exception e){;
+           return new ResponseEntity<>(new AppError("CHECK_USERNAME_OR_EMAIL", e.getMessage()), HttpStatus.BAD_REQUEST);
+       }
+       return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

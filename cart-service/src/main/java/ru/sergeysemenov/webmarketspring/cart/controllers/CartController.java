@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import ru.sergeysemenov.webmarketspring.api.CartDto;
 import ru.sergeysemenov.webmarketspring.api.CartItemDto;
-import ru.sergeysemenov.webmarketspring.api.StringResponse;
+import ru.sergeysemenov.webmarketspring.api.StringDto;
 import ru.sergeysemenov.webmarketspring.cart.services.CartService;
 
 import java.util.List;
@@ -19,8 +19,8 @@ public class CartController {
     private final CartService cartService;
 
     @GetMapping("/generate_id")
-    public StringResponse generateGuestCartId() {
-        return new StringResponse(UUID.randomUUID().toString());
+    public StringDto generateGuestCartId() {
+        return new StringDto(UUID.randomUUID().toString());
     }
 
     @GetMapping("/{guestCartId}")
