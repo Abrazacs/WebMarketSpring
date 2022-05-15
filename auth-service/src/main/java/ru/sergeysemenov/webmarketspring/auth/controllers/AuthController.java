@@ -1,6 +1,7 @@
 package ru.sergeysemenov.webmarketspring.auth.controllers;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -21,6 +22,7 @@ import ru.sergeysemenov.webmarketspring.auth.utils.JwtTokenUtil;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping()
+@Slf4j
 public class AuthController {
     private final UserService userService;
     private final JwtTokenUtil jwtTokenUtil;

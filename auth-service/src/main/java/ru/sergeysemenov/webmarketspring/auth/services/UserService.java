@@ -48,7 +48,10 @@ public class UserService implements UserDetailsService {
     public HttpStatus tryToSignInNewUser(RegisterUserDto registerUserDto) {
         if (userRepository.findByUsername(registerUserDto.getUsername()).isPresent()){
             return HttpStatus.BAD_REQUEST;
-        } else {
+        } else if(userRepository.findByEmail(registerUserDto.getEmail()).isPresent()){
+            return HttpStatus.BAD_REQUEST;
+        }
+        else {
             User user = createNewUser(registerUserDto);
             userRepository.save(user);
             return HttpStatus.OK;

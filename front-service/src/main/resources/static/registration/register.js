@@ -1,7 +1,7 @@
 angular.module('market').controller('registerController', function ($scope, $http) {
 
     $scope.tryToSignIn = function () {
-        if ($scope.entrant.login == '' || $scope.entrant.password == '' ||
+        if ($scope.entrant.username == '' || $scope.entrant.password == '' ||
             $scope.entrant.email == '' || $scope.entrant.confirmation == ''){
             alert('Необходимо заполнить все поля');
             return;
@@ -11,13 +11,13 @@ angular.module('market').controller('registerController', function ($scope, $htt
             return;
         }
         else{
-            $http.post('http://localhost:5555/auth/registration' + $scope.entrant)
+            $http.post('http://localhost:5555/auth/registration', $scope.entrant)
                 .then(function (response) {
-                    if (response.ok){
+                    if (response.status == 200){
                         alert('Вы успешно зарегистрировались. Войдите под учетной записью')
                     }
                     else {
-                        alert('Польователь с таким логином уже существует')
+                        alert('Польователь с таким логином или почтой уже существует')
                     }
                 });
         }
