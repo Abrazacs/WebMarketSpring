@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.sergeysemenov.webmarketspring.api.RegisterUserDto;
 import ru.sergeysemenov.webmarketspring.auth.entities.Role;
 import ru.sergeysemenov.webmarketspring.auth.entities.User;
+import ru.sergeysemenov.webmarketspring.auth.exceptions.RegistrationException;
 import ru.sergeysemenov.webmarketspring.auth.repositories.UserRepository;
 
 import java.util.ArrayList;
@@ -46,16 +47,16 @@ public class UserService implements UserDetailsService {
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
     }
 
-    public void tryToSignInNewUser(RegisterUserDto registerUserDto) throws Exception {
+    public void tryToSignInNewUser(RegisterUserDto registerUserDto) throws RegistrationException {
         if (userRepository.findByUsername(registerUserDto.getUsername()).isPresent()){
-            throw new Exception("Логин занят");
-        } else if(userRepository.findByEmail(registerUserDto.getEmail()).isPresent()){
-            throw new Exception("Почта занята");
+            throw new RegistrationException("Логин занят");
         }
-        else {
-            User user = createNewUser(registerUserDto);
-            userRepository.save(user);
+        if(userRepository.findByEmail(registerUserDto.getEmail()).isPresent()){
+            throw new RegistrationException("Почта занята");
         }
+        User user = createNewUser(registerUserDto);
+        userRepository.save(user);
+
     }
 
     private User createNewUser(RegisterUserDto registerUserDto) {
