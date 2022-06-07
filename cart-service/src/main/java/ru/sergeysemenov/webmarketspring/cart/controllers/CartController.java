@@ -63,6 +63,9 @@ public class CartController {
 
     private String selectCartId(String username, String guestCartId) {
         if (username != null) {
+            if(cartService.isCartExist(guestCartId)){
+                cartService.mergeCarts(username, guestCartId);
+            }
             return username;
         }
         return guestCartId;

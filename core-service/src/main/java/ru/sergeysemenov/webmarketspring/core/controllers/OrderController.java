@@ -1,5 +1,8 @@
 package ru.sergeysemenov.webmarketspring.core.controllers;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -16,10 +19,31 @@ import java.util.List;
 public class OrderController {
     private final OrderService orderService;
 
+    @Operation(
+            summary = "Запрос на получение списка заказов пользователя",
+            responses = {
+                    @ApiResponse(
+                            description = "Возвращает перечень заказзов залогиневшегося пользователья",
+                            responseCode = "200"
+                    )
+
+            }
+    )
     @GetMapping
-    public List<Order> getUsersOrders (@RequestHeader String username){
+    public List<Order> getUsersOrders (@RequestHeader @Parameter(description = "Имя пользователя", required = true) String username){
         return orderService.findUserOrders(username);
     }
+
+    @Operation(
+            summary = "Запрос создание нового заказа",
+            responses = {
+                    @ApiResponse(
+                            description = "Заказ создан",
+                            responseCode = "201"
+                    )
+
+            }
+    )
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
