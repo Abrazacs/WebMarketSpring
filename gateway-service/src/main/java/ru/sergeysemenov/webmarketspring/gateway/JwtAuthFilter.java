@@ -11,6 +11,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
+import java.util.List;
+
 @Component
 public class JwtAuthFilter extends AbstractGatewayFilterFactory<JwtAuthFilter.Config> {
     @Autowired
@@ -41,9 +43,11 @@ public class JwtAuthFilter extends AbstractGatewayFilterFactory<JwtAuthFilter.Co
     }
 
     private void insertHeadersIntoRequest(ServerWebExchange exchange, String token) {
+        List<String> roles = jwtUtil.getRolesFromToken(token);
         Claims claims = jwtUtil.getAllClaimsFromToken(token);
         exchange.getRequest().mutate()
                 .header("username", claims.getSubject())
+                .header("roles", String.valueOf(claims.get("role")))
                 .build();
     }
 

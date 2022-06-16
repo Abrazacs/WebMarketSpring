@@ -12,14 +12,12 @@ angular.module('market').controller('registerController', function ($scope, $htt
         }
         else{
             $http.post('http://localhost:5555/auth/registration', $scope.entrant)
-                .then(function (response) {
-                    if (response.status == 200){
-                        alert('Вы успешно зарегистрировались. Войдите под учетной записью')
-                    }
-                    if (response.status == 400){
-                        $scope.error = response.data;
-                        alert($scope.error.message);
-                    }
+                .then(function successCallback(response) {
+                    alert('Вы успешно зарегистрировались. Войдите под учетной записью')
+                    },
+                function errorCallback(response){
+                    $scope.errorData = response.data;
+                    alert($scope.errorData.message)
                 });
         }
 
